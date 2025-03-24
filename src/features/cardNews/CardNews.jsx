@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/scrollbar";
+import { Link } from "react-router-dom";
 
 const newsItems = [
   {
@@ -160,7 +161,8 @@ export function CardNews() {
                     ? news.description.substr(0, 40).trim() + '...'
                     : news.description
                     }</p>
-                  <button className="news-button">Подробнее</button>
+                  <button className="news-button">  <Link to="/news-detail/:id">Подробнее</Link></button>
+                
                 </div>
               </div>
             ))}
