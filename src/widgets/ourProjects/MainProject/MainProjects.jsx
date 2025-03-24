@@ -1,7 +1,7 @@
 import img4 from '../../../shared/image/main.svg'
 import img12 from '../../../shared/image/image.svg'
 import img9 from '../../../shared/image/image.png'
-import { useState, useEffect } from 'react';
+import { useState,  } from 'react';
 
 import "../Mainprojects.scss"
 import { CardProjects } from '../../../features'
