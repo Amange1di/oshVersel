@@ -1,4 +1,4 @@
-import './newsBanner.scss'
+import './NewsBanner.scss'
 import nenoigirl from '../../../shared/img/books.svg'
 import nenoibook from '../../../shared/img/group.svg'
 import laptop from '../../../shared/img/laptop.svg'
