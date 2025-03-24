@@ -4,6 +4,7 @@ import img9 from '../../../shared/image/image.png'
 import { useState,  } from 'react';
 
 // import "../Mainprojects.scss";
+import "../eror.scss"
 import { CardProjects } from '../../../features'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
