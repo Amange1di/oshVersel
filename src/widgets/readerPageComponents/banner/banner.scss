@@ -1,0 +1,185 @@
+.banner{
+    display: flex;
+    height: 590px;
+    background-color: #105B60;
+    border-radius: 49px;
+    justify-content: space-between;
+
+    &-row{
+        width: 55%;
+    }
+
+    &-img{
+         width: 40%;
+         height: 591px;
+         display: block;
+        
+     }
+
+   
+    &-text1{
+        font-size: 71px;
+        font-weight: 400;
+        line-height: 71px;
+        letter-spacing: 0%;
+        color: #FFFFFF;
+        padding-top: 90px;
+        padding-left: 60px;
+        width: 754px;
+    }
+    &-text2{
+        color: #EAEBEC;
+        width: 580px;
+        height: 84px;
+        margin-left: 50px;
+        padding-top: 50px;
+
+    }
+    &-btn{
+        width: 186px;
+        height:  55px;
+        border-radius: 50px;
+        background-color: #FFFFFF;
+        color: #105B60;
+        border: none;
+        margin-left: 60px;
+        margin-top: 80px;
+        position: absolute;
+
+        &:hover {
+            background: #00a6a6;
+            color: #fff;
+        }
+    }
+
+}
+
+
+
+
+@media screen and (max-width: 1200px) {
+    .banner{
+
+            height: 453px;
+            border-radius: 30px;
+
+
+        .banner-img{
+            width: 420px;
+            height: 453px;  
+            margin-top: 0px;
+        }
+
+        .banner-text1{
+            font-size: 52px;
+            width: 600px;
+            height: 99px;
+            position: absolute;
+            margin-top: -60px;
+            margin-left: -18px;
+        }
+        .banner-text2{
+            width: 511px;
+            height: 32px;
+            margin-top: 212px;
+            position: absolute;
+            margin-left: 42px;
+
+        }
+        .banner-btn{
+            width: 99px;
+            height: 30px;
+            margin-top: 380px;
+            margin-left: 42px;
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+
+    .banner{
+        // width: 100%;   
+        height: 415px;
+        display: flex;
+        margin: 0 auto;
+    
+    .banner-text1{
+        width: 500px;
+        font-size: 52px;
+    }
+
+    .banner-text2{
+        width: 460px;
+        margin-top: 200px;
+    }
+    .banner-img{
+        width: 410px;
+        height: 415px;
+    }
+    .banner-btn{
+        margin-top: 360px;
+    }
+ }
+}
+
+@media screen and (max-width: 768px) {
+    .banner{
+        background-image: url('https://s3-alpha-sig.figma.com/img/02ce/2bb1/6166f207c7c31b5bdd746a128d5c665b?Expires=1742774400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=GQXzXdNPXdftOdlKw3tzd8C6X5VgZgdrMRqyHjV3tTOstRn1Wr7aF2w8014FIoYczC~j7Y6L79GY5yVX3no~RTzRJhplVzSdAv6tBeRzZL9~mOYkpIQGDl0NixcgOY-wXQcKuawbiGHR7Oi-gR4Pjmw~iI2VLL8~1u0DmIcEjgm7L8FFytvqUYyXLfQI8uBbUD26zk1pj2o1A7AHAK6sfL~JEXuQTOycCx1ciqjCrgbmQA3j6ZX3ejKB51yWL67zyu33rEUEBDNwN9WbM2xcn-HIhJ6uCfEuC6QTrlQXSxRKwIfe-ZCCzRO6uImYjpEpNK-eico6vsgLldA-WrUzpg__');
+  
+        .banner-img{
+            width: 0;
+        }
+        
+    }
+}
+
+@media screen and (max-width: 515px) {
+
+    .banner{
+        height: 780px;
+       
+        .banner-img{
+            width: 0;
+        }
+        .banner-text1{
+            font-size: 40px;
+            margin-top: 40px;
+        }
+        .banner-text2{
+          width: 70%;
+          margin-top: 250px;
+          font-size: 23px;
+        }
+        .banner-btn{
+        display: none;
+            
+        }
+    }
+}
+
+
+@media screen and (max-width: 485px) {
+     .banner{
+
+        .banner-text1{
+            width: 100%;
+        }
+
+        .banner-text2{
+            padding-top: 120px;
+        }
+     }
+}
+
+@media screen and (max-width: 353px) {
+    .banner{
+
+        .banner-text1{
+            width: 400px;
+            font-size: 35px;
+        }
+        .banner-text2{
+            font-size: 20px;
+        }
+    }
+}

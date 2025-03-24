@@ -1,0 +1,32 @@
+.content-container {
+  width: 100%;
+
+  .page-title {
+    color: #105B60;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 600px;
+    text-transform: lowercase;
+    font-family: Kino;
+  }
+
+  .content-wrapper {
+    display: flex;
+    width: 100%;
+    font-family: "SF Pro Display", sans-serif;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  .content-wrapper {
+    font-size: 18px;
+  }
+
+  // .page-title {
+  //   font-size: 48.78px;
+  // }
+}

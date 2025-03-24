@@ -1,0 +1,68 @@
+.rating{
+    margin-top: 100px;
+
+    &-text1{
+       
+        color: #105B60;
+        font-size: 44px;
+
+    }
+    &-date{
+        font-size: 44px;
+        color: #105B60;
+        
+    }
+    &-title{
+        font-size: 22px;
+        width: 325px;
+        color: #105B60;
+    }
+
+    &-img{
+        width: 315px;
+    }
+
+    &-text2{
+        margin-top: 60px;
+        margin-left: 0px;
+        color: #105B60;
+        font-size: 44px;
+
+    }
+    &-data{
+        font-size: 44px;
+        color: #105B60;
+        
+    }
+    &-title1{
+        font-size: 22px;
+        width: 400px;
+        color: #105B60;
+    }
+   
+    
+    &-img2{
+        width: 315px;
+    }
+   
+    &-take{
+        color: #105B60;
+    }
+
+}
+
+
+// @media screen and (max-width: 1200px) {
+//      .rating{
+//         max-width: 960px;
+//         .rating-box{
+//         //    justify-content: space-between;
+//         }
+//      }
+// }
+
+@media screen and (max-width: 992px) {
+    .rating{
+        width: 100%;
+    }
+}

@@ -1,0 +1,29 @@
+.headerNav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    margin: 15px 0;
+    &_link {
+        text-decoration: none;
+        color: #105B60;
+        font-weight: 500;
+        font-size: clamp(10px, 1vw, 16px);
+        white-space: nowrap;
+        transition: color 0.3s ease;
+
+
+    }
+
+
+
+}
+
+@media screen and (max-width: 1024px) {
+
+    .header_nav-top,
+    .header_nav-bottom {
+        display: none;
+    }
+}

@@ -1,0 +1,25 @@
+.professional-container {
+    max-width: 1320px;
+    width: 100%;
+    margin: 10px 5px ;
+  
+    .professional-content {
+      display: flex;
+      gap: 30px;
+  
+      .professional-main-content {
+        flex-grow: 1;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .professional-container {
+      // padding: 20px;
+      
+      .professional-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  }

@@ -1,0 +1,125 @@
+
+.ourProject{
+    &_title{
+        font-weight: 900;
+        font-size: 46px;
+        color: #105B60;
+        margin-bottom: 8px;
+    }
+
+    &_group{
+        display: flex;
+        border-top: 1px solid #5A5C62CC;
+        padding: 20px 0px;
+        &_img{
+            width: 50%;
+        img{
+            width: 100%;
+            border-radius: 5px;
+            margin: 0 auto;
+        }
+        }
+        &_text{
+            width: 40%;
+            margin-left: 15px;
+        
+        h2{
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 28px;
+
+        }
+        &_description{
+            border-top: 1px solid #5A5C62CC;
+            margin-top: 10px;
+
+            &_part{
+                width: 100%;
+                margin-top: 20px;
+              }
+        }
+        
+
+        }
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 768px) {
+    .ourProject{
+        &_group{
+            flex-direction: column;
+
+            &_img{
+                width: 100%;
+            }
+
+            &_text{
+                width: 100%;
+            }
+        }
+        
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .ourProject{
+        h1{
+            font-size: 25px;
+        }
+        &_group{
+            flex-direction: column;
+
+            &_img{
+                width: 100%;
+            }
+
+            &_text{
+                width: 95%;
+            }
+        }
+        
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ourProject{
+        h1{
+            font-size: 25px;
+        }
+        &_group{
+            flex-direction: column;
+
+            &_img{
+                width: 100%;
+            }
+
+            &_text{
+                width: 95%;
+            }
+        }
+        
+    }
+}
+
+
+@media screen and (max-width: 576px) {
+    .ourProject{
+        h1{
+            font-size: 18px;
+        }
+        &_group{
+            flex-direction: column;
+
+            &_img{
+                width: 100%;
+            }
+
+           
+        }
+        
+    }
+}

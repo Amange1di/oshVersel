@@ -1,0 +1,279 @@
+.projectBanner {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 0;
+    overflow: hidden;
+
+
+    .rotating-wrapper {
+        position: absolute;
+        left: 40%;
+        top: 56%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        width: 290px;
+        height: 290px;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+    }
+
+    .text {
+        font-weight: 700;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        font-family: 'Kino', sans-serif;
+        font-size: 14px;
+        fill: #105B60;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    #rotatingText {
+        animation: rotate-circle 20s linear infinite;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+
+        &:hover {
+            animation-play-state: paused;
+            transform: scale(1.05);
+        }
+    }
+
+    @keyframes rotate-circle {
+        from {
+            transform: rotate(0);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .projectbanner_img1,
+    .projectbanner_img2 {
+        margin: 0 10px;
+        width: 48%;
+        height: auto;
+        max-height: 600px;
+        object-fit: cover;
+        border-radius: 20px;
+        transition: transform 0.3s ease;
+
+    }
+
+    .projectbanner_img1 {
+        margin-top: 60px;
+    }
+
+    h1 {
+        color: #105B60;
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 40px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        max-width: 700px;
+        font-family: kino;
+        z-index: 2;
+        transition: all 0.3s ease;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    h3 {
+        color: #105B60;
+        font-size: 28px;
+        font-weight: 600;
+        position: absolute;
+        bottom: 40px;
+        right: 40%;
+        transform: translateX(50%);
+        text-align: start;
+        max-width: 220px;
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
+}
+
+@media (max-width: 1400px) {
+    .projectBanner {
+
+        .rotating-wrapper {
+            top: 60%;
+            width: 250px ;
+        }
+
+
+        h3 {
+
+            bottom: 20px;
+        }
+
+        .text {
+            font-size: 13px;
+        }
+    }
+
+}
+
+@media (max-width: 1200px) {
+    .projectBanner {
+
+        padding: 30px 0;
+
+        .rotating-wrapper {
+            top: 62%;
+            width: 230px ;
+        }
+
+
+        h3 {
+            font-size: 22px ;
+            right: 38% ;
+            width: 180px;
+            bottom: 20px;
+        }
+
+    }
+
+
+}
+
+@media (max-width: 992px) {
+    .projectBanner {
+
+        .rotating-wrapper {
+            top: 76% ;
+            width: 150px ;
+        }
+
+        h1 {
+            font-size: 24px ;
+            max-width: 500px ;
+        }
+
+        h3 {
+            font-size: 18px ;
+            right: 38% ;
+            max-width: 145px ;
+            bottom: 20px;
+        }
+
+    }
+
+
+}
+
+@media (max-width: 768px) {
+    .projectBanner {
+
+        .rotating-wrapper {
+            left: 42%;
+            top: 74% ;
+            width: 120px ;
+            height: 200px;
+        }
+
+        h1 {
+            font-size: 18px ;
+            max-width: 400px ;
+        }
+
+        h3 {
+            font-size: 12px ;
+            right: 38% ;
+            max-width: 95px ;
+            bottom: 30px;
+        }
+
+        .text {
+            font-size: 13px;
+        }
+
+    }
+}
+
+
+
+@media (max-width: 576px) {
+    .projectBanner {
+
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+            url(../../../shared/images/ourBanner.png) center/cover no-repeat;
+        min-height: 900px;
+        padding: 20px;
+        justify-content: space-evenly;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+
+        .projectbanner_img1,
+        .projectbanner_img2 {
+            display: none;
+        }
+
+
+        h1 {
+            position: relative;
+            font-size: 28px;
+            text-align: start;
+            margin: 15px 10px;
+            order: 2;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #rotatingText {
+            width: 200px;
+            height: 200px;
+        }
+
+        .rotating-wrapper {
+            position: relative;
+            left: 10%;
+            top: 90%;
+            transform: none;
+            width: 220px;
+            height: 220px;
+            margin: 15px 0;
+            order: 3;
+        }
+
+        .text {
+            fill: #fff;
+            font-size: 11px;
+            letter-spacing: 1.8px;
+        }
+
+        h3 {
+            width: 300px ;
+            position: relative;
+            right: 20px ;
+            bottom: auto;
+            margin: 15px auto;
+            font-size: 22px ;
+            order: 4;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .rotating-wrapper {
+            left: 10%;
+            top: 60%;
+            margin: 20px 0;
+        }
+
+        h1 {
+            margin: 20px 15px;
+            max-width: 100%;
+        }
+
+    }
+}

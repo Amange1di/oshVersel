@@ -1,0 +1,23 @@
+
+.sponsors_title {
+  color: #105B60;
+  margin-top: 150px;
+  font-size: 30px;
+}
+
+.sponsors_img {
+  width: 100%;
+  margin-top: 40px;
+}
+
+@media (max-width: 1024px) {
+  .sponsors_title {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sponsors_title {
+    font-size: 20px;
+  }
+}

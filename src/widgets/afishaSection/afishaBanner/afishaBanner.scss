@@ -1,0 +1,62 @@
+.baner {
+    background-image: url(../../../shared/libraryimg/BanerImg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin: 0 auto;
+    width: 100%;
+    height: 70vh;
+    padding: 20px;
+    font-family: 'Kino', sans-serif;
+    display: flex;
+    // align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &_imge{
+        display: none;
+        width: 100%;
+    }
+
+    &_text {
+        font-size: 30px;
+        font-weight: 900;
+        width: 100%;
+        color: #105B60;
+        font-family: "Kino", sans-serif;
+    }
+
+    &_dispatch{
+        color: #FFFFFF;
+        font-weight: 400;
+        width:65%;
+        padding: 10px;
+        font-family: "SF Pro Display" sans-serif;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .baner {
+        background-image: none;
+        background-image: url('../../../shared//eventsImg/Rectangle\ 679\ \(1\).png');
+        height: 100vh;
+        background-size: cover;
+        background-position: center end;
+        padding: 10px;
+        justify-content: flex-end;
+
+        h1{
+            color: #FFFFFF;
+            margin-bottom: 40px;
+            font-size: 22px;
+        }
+        p{
+            width: 100%;
+        }
+    }
+    .imge{
+        display: none;
+    }
+
+}
