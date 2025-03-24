@@ -156,6 +156,7 @@
 
     &__card {
       margin-top: 10px;
+      width: 100%;
 
       &--active {
         width: 100%;
@@ -165,7 +166,6 @@
         width: 100%;
       }
 
-      width: 100%;
 
       &-image {
         height: 240px;
