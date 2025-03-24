@@ -3,7 +3,7 @@ import img12 from '../../../shared/image/image.svg'
 import img9 from '../../../shared/image/image.png'
 import { useState,  } from 'react';
 
-import '../MainProject/mainProjects.scss'
+import "../mainprojects.scss"
 import { CardProjects } from '../../../features'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
