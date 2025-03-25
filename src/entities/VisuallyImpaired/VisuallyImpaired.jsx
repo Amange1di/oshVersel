@@ -1,53 +1,94 @@
-import { faImage } from "@fortawesome/fontawesome-free-regular";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useVisually } from "../../app/store/reducers/visually";
 import {
+  activeMode,
+  deactivateMode,
+  increaseFontSize,
+  decreaseFontSize,
+  handleThemeChange,
+  showPictures,
+  hidePictures,
+  darkPictures,
+  activeSpeech,
+  unplugSpeech,
+  setHide,
+  setShow,
+} from "../../app/store/reducers/visually";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faImage,
   faMinus,
   faMinusCircle,
   faVolumeOff,
-} from "@fortawesome/fontawesome-free-solid";
-import {
   faCircleHalfStroke,
   faGear,
   faVolumeHigh,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  activeSpeech,
-  darkPictures,
-  deactivateMode,
-  decreaseFontSize,
-  handleThemeChange,
-  hidePictures,
-  increaseFontSize,
-  setHide,
-  setShow,
-  showPictures,
-  unplugSpeech,
-} from "../../app/store/reducers/visually";
 import Modal from "./Modal";
 
 export const VisuallyImpaired = ({ mainTextSpeech }) => {
-  const { hide, speech } = useSelector((state) => state.visually);
+  const visually = useVisually();
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
 
-
-  useEffect(() => {
-    if (speech) {
-      const allText = document.body.innerText;
+  const speakWebsite = () => {
+    if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(allText);
+
+      const bodyText = Array.from(document.body.childNodes)
+        .filter((node) => !node.classList?.contains("visually")) 
+        .map((node) => node.textContent?.trim())
+        .filter((text) => text) 
+        .join(" ");
+
+      const utterance = new SpeechSynthesisUtterance(bodyText);
       utterance.lang = "ru-RU";
+      utterance.onend = () => {
+        dispatch(unplugSpeech());
+        mainTextSpeech("Озвучивание сайта завершено");
+      };
       window.speechSynthesis.speak(utterance);
     } else {
-      window.speechSynthesis.cancel(); 
+      console.log("Синтез речи не поддерживается браузером");
+      mainTextSpeech("Синтез речи не поддерживается вашим браузером");
     }
-  }, [speech]);
+  };
+
+  useEffect(() => {
+    const body = document.body;
+    body.className = "";
+
+    if (visually.active) {
+      body.classList.add(visually.theme);
+      body.classList.add(visually.picture);
+      body.classList.add(visually.letterSpacing);
+      body.classList.add(visually.lineSpacing);
+      body.classList.add(visually.font);
+      if (visually.fontSize > 0) {
+        body.classList.add(`fontSize-${visually.fontSize}`);
+      }
+    }
+  }, [
+    visually.active,
+    visually.theme,
+    visually.picture,
+    visually.letterSpacing,
+    visually.lineSpacing,
+    visually.font,
+    visually.fontSize,
+  ]);
+
+  useEffect(() => {
+    if (!visually.active) {
+      dispatch(activeMode());
+      mainTextSpeech("Режим для слабовидящих активирован");
+    }
+  }, [dispatch, visually.active, mainTextSpeech]);
 
   return (
-    <React.Fragment>
-      {hide && (
+    <>
+      {visually.hide && (
         <div className="visually">
           <div className="visually__content">
             <p>Размер шрифта</p>
@@ -155,6 +196,7 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
               <button
                 onClick={() => {
                   dispatch(unplugSpeech());
+                  window.speechSynthesis.cancel(); 
                   mainTextSpeech("Синтез речи выключен");
                 }}
               >
@@ -164,6 +206,7 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
                 onClick={() => {
                   dispatch(activeSpeech());
                   mainTextSpeech("Синтез речи включен");
+                  speakWebsite(); 
                 }}
               >
                 <FontAwesomeIcon icon={faVolumeHigh} />
@@ -180,6 +223,7 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
                 onClick={() => {
                   dispatch(deactivateMode());
                   mainTextSpeech("Обычная версия сайта");
+                  document.body.className = "";
                 }}
               >
                 Обычная версия
@@ -197,7 +241,7 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
           {modal && <Modal mainTextSpeech={mainTextSpeech} setModal={setModal} />}
         </div>
       )}
-      {!hide && (
+      {!visually.hide && (
         <button
           onClick={() => {
             dispatch(setShow());
@@ -207,6 +251,6 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
           Показать
         </button>
       )}
-    </React.Fragment>
+    </>
   );
 };

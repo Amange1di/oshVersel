@@ -1,5 +1,5 @@
 import { CardNews } from '../../../features';
-import './homeNews.scss';
+import './HomeNews.scss';
 
 export const HomeNews = () => {
     const newsItems = [

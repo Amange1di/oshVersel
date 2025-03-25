@@ -25,17 +25,33 @@
     }
 
     img {
-      width: 184px;
+      width: 204px;
       height: auto;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 10px; 
       flex-shrink: 1;
       max-width: 100%;
+      
       &:nth-child(1) {
+        clip-path: polygon(28.4% 0%, 100.5% 26%, 100% 43%, 100.5% 100.3%, 65.5% 100.3%, 0% 75.3%, 0% 78.3%, 0% 43%, 0% 0%);
+        border-radius: 15px; 
+      }
+      &:nth-child(2) {
+        clip-path: polygon(71.6% 0%, 0% 26%, 0% 43%, 0% 100.3%, 34.5% 100.3%, 100% 75.3%, 100% 78.3%, 100% 43%, 100% 0%);
+        border-radius: 15px;
       }
       &:nth-child(3) {
         width: 403px;
         height: 385px;
+        border-radius: 15px;
+      }
+      &:nth-child(4) {
+        clip-path: polygon(28.4% 0%, 100.5% 26%, 100% 43%, 100.5% 100.3%, 65.5% 100.3%, 0% 75.3%, 0% 78.3%, 0% 43%, 0% 0%);
+        border-radius: 15px;
+      }
+      &:nth-child(5) {
+        clip-path: polygon(71.6% 0%, 0% 26%, 0% 43%, 0% 100.3%, 34.5% 100.3%, 100% 75.3%, 100% 78.3%, 100% 43%, 100% 0%);
+        border-radius: 15px;
       }
     }
   }
@@ -67,6 +83,23 @@
     }
   }
 }
+
+
+@media (max-width: 1200px) {
+  .home-banner {
+   
+    .home-banner-images {
+      img {
+        &:nth-child(1),
+        &:nth-child(5) {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+
 @media (max-width: 1024px) {
   .home-banner {
     .home-banner-text {
