@@ -1,124 +1,66 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useVisually } from "../../app/store/reducers/visually";
+import { faImage } from "@fortawesome/fontawesome-free-regular";
 import {
-  activeMode,
-  deactivateMode,
-  increaseFontSize,
-  decreaseFontSize,
-  handleThemeChange,
-  showPictures,
-  hidePictures,
-  darkPictures,
-  activeSpeech,
-  unplugSpeech,
-  setHide,
-  setShow,
-} from "../../app/store/reducers/visually";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faImage,
   faMinus,
   faMinusCircle,
   faVolumeOff,
+} from "@fortawesome/fontawesome-free-solid";
+import {
   faCircleHalfStroke,
   faGear,
   faVolumeHigh,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  activeSpeech,
+  darkPictures,
+  deactivateMode,
+  decreaseFontSize,
+  handleThemeChange,
+  hidePictures,
+  increaseFontSize,
+  setHide,
+  setShow,
+  showPictures,
+  unplugSpeech,
+  useVisually,
+} from "../../app/redux/slices/visually";
 import Modal from "./Modal";
+import { useTranslation } from "react-i18next";
 
+// import faImage from "@fortawesome/fontawesome-free-regular";
 export const VisuallyImpaired = ({ mainTextSpeech }) => {
-  const visually = useVisually();
+  const { hide } = useVisually();
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
-
-  const speakWebsite = () => {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-
-      const bodyText = Array.from(document.body.childNodes)
-        .filter((node) => !node.classList?.contains("visually")) 
-        .map((node) => node.textContent?.trim())
-        .filter((text) => text) 
-        .join(" ");
-
-      const utterance = new SpeechSynthesisUtterance(bodyText);
-      utterance.lang = "ru-RU";
-      utterance.onend = () => {
-        dispatch(unplugSpeech());
-        mainTextSpeech("Озвучивание сайта завершено");
-      };
-      window.speechSynthesis.speak(utterance);
-    } else {
-      console.log("Синтез речи не поддерживается браузером");
-      mainTextSpeech("Синтез речи не поддерживается вашим браузером");
-    }
-  };
-
-  useEffect(() => {
-    const body = document.body;
-    body.className = "";
-
-    if (visually.active) {
-      body.classList.add(visually.theme);
-      body.classList.add(visually.picture);
-      body.classList.add(visually.letterSpacing);
-      body.classList.add(visually.lineSpacing);
-      body.classList.add(visually.font);
-      if (visually.fontSize > 0) {
-        body.classList.add(`fontSize-${visually.fontSize}`);
-      }
-    }
-  }, [
-    visually.active,
-    visually.theme,
-    visually.picture,
-    visually.letterSpacing,
-    visually.lineSpacing,
-    visually.font,
-    visually.fontSize,
-  ]);
-
-  useEffect(() => {
-    if (!visually.active) {
-      dispatch(activeMode());
-      mainTextSpeech("Режим для слабовидящих активирован");
-    }
-  }, [dispatch, visually.active, mainTextSpeech]);
+  const { t } = useTranslation();
 
   return (
-    <>
-      {visually.hide && (
+    <React.Fragment>
+      {hide && (
         <div className="visually">
           <div className="visually__content">
-            <p>Размер шрифта</p>
+            <p>{t("Размер шрифта")}</p>
             <div>
-              <button
-                onClick={() => {
-                  dispatch(decreaseFontSize());
-                  mainTextSpeech("Текст уменьшен");
-                }}
-              >
-                A-
-              </button>
-              <button
-                onClick={() => {
-                  dispatch(increaseFontSize());
-                  mainTextSpeech("Текст увеличен");
-                }}
-              >
-                A+
-              </button>
+              <button onClick={() => {
+                dispatch(decreaseFontSize())
+                mainTextSpeech('Текст уменьшен')
+              }}>A-</button>
+              <button onClick={() => {
+                dispatch(increaseFontSize())
+                mainTextSpeech('Текст увеличен')
+              }}>A+</button>
             </div>
           </div>
           <div className="visually__content" id="visually__content">
-            <p>Цвета сайта</p>
+            <p>{t("Цвета сайта")}</p>
             <div>
               <button
                 id="visually__content-light"
                 onClick={() => {
                   dispatch(handleThemeChange("light"));
-                  mainTextSpeech("Цвет сайта черный по белому");
+                  mainTextSpeech('Цвет сайта черный по белому')
                 }}
               >
                 ц
@@ -127,7 +69,7 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
                 id="visually__content-dark"
                 onClick={() => {
                   dispatch(handleThemeChange("dark"));
-                  mainTextSpeech("Цвет сайта белый по черному");
+                  mainTextSpeech('Цвет сайта белый по черному')
                 }}
               >
                 ц
@@ -136,7 +78,7 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
                 id="visually__content-blue"
                 onClick={() => {
                   dispatch(handleThemeChange("blue"));
-                  mainTextSpeech("Цвет сайта темно-синий по голубому");
+                  mainTextSpeech('Цвет сайта темно-синий по голубому')
                 }}
               >
                 ц
@@ -145,7 +87,7 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
                 id="visually__content-brown"
                 onClick={() => {
                   dispatch(handleThemeChange("brown"));
-                  mainTextSpeech("Цвет сайта коричневый по бежевому");
+                  mainTextSpeech('Цвет сайта коричневый по бежевому')
                 }}
               >
                 ц
@@ -154,7 +96,7 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
                 id="visually__content-green"
                 onClick={() => {
                   dispatch(handleThemeChange("green"));
-                  mainTextSpeech("Цвет сайта зеленый по темно-коричневому");
+                  mainTextSpeech('Цвет сайта зеленый по темно-коричневому')
                 }}
               >
                 ц
@@ -162,78 +104,59 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
             </div>
           </div>
           <div className="visually__content">
-            <p>Изображения</p>
+            <p>{t("Изображения")}</p>
             <div>
-              <button
-                onClick={() => {
-                  dispatch(showPictures());
-                  mainTextSpeech("Изображения включены");
-                }}
-              >
+              <button onClick={() => {
+                dispatch(showPictures());
+                mainTextSpeech('изображения включены');
+              }}>
                 <FontAwesomeIcon icon={faImage} />
               </button>
-              <button
-                onClick={() => {
-                  dispatch(hidePictures());
-                  mainTextSpeech("Изображения выключены");
-                }}
-              >
+              <button onClick={() => {
+                dispatch(hidePictures())
+                mainTextSpeech('изображения выключены')
+              }}>
                 <FontAwesomeIcon icon={faMinusCircle} />
               </button>
-              <button
-                onClick={() => {
-                  dispatch(darkPictures());
-                  mainTextSpeech("Изображения черно-белые");
-                }}
-              >
+              <button onClick={() => {
+                dispatch(darkPictures());
+                mainTextSpeech('изображения черно-белые')
+              }}>
                 <FontAwesomeIcon icon={faCircleHalfStroke} />
               </button>
             </div>
           </div>
           <div className="visually__content">
-            <p>Синтез речи</p>
+            <p>{t("Синтез речи")}</p>
             <div>
-              <button
-                onClick={() => {
-                  dispatch(unplugSpeech());
-                  window.speechSynthesis.cancel(); 
-                  mainTextSpeech("Синтез речи выключен");
-                }}
-              >
+              <button onClick={() => {
+                dispatch(unplugSpeech())
+              }}>
                 <FontAwesomeIcon icon={faVolumeOff} />
               </button>
-              <button
-                onClick={() => {
-                  dispatch(activeSpeech());
-                  mainTextSpeech("Синтез речи включен");
-                  speakWebsite(); 
-                }}
-              >
+              <button onClick={() => {
+                dispatch(activeSpeech())
+              }}>
                 <FontAwesomeIcon icon={faVolumeHigh} />
               </button>
             </div>
           </div>
           <div className="visually__content">
-            <p>Настройки</p>
+            <p>{t("настройки")}</p>
             <div>
               <button onClick={() => setModal(!modal)}>
                 <FontAwesomeIcon icon={faGear} />
               </button>
-              <button
-                onClick={() => {
-                  dispatch(deactivateMode());
-                  mainTextSpeech("Обычная версия сайта");
-                  document.body.className = "";
-                }}
-              >
-                Обычная версия
+              <button onClick={() => {
+                dispatch(deactivateMode())
+                mainTextSpeech('Обычная версия сайта')
+              }}>
+                {t("обычная версия")}
               </button>
-              <button
-                onClick={() => {
-                  dispatch(setHide());
-                  mainTextSpeech("Панель скрыта");
-                }}
-              >
+              <button onClick={() => {
+                dispatch(setHide());
+                mainTextSpeech('Панель скрыт');
+              }}>
                 <FontAwesomeIcon icon={faMinus} />
               </button>
             </div>
@@ -241,16 +164,10 @@ export const VisuallyImpaired = ({ mainTextSpeech }) => {
           {modal && <Modal mainTextSpeech={mainTextSpeech} setModal={setModal} />}
         </div>
       )}
-      {!visually.hide && (
-        <button
-          onClick={() => {
-            dispatch(setShow());
-            mainTextSpeech("Панель раскрыта");
-          }}
-        >
-          Показать
-        </button>
-      )}
-    </>
+      {!hide && <button onClick={() => {
+        dispatch(setShow());
+        mainTextSpeech('панель раскрыт')
+      }}>показать</button>}
+    </React.Fragment>
   );
 };

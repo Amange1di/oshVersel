@@ -1,94 +1,204 @@
-import logo from '../../shared/image/Group.svg';
-import "./header.scss"
-import Search from './search/Search';
-import { FaEyeSlash } from "react-icons/fa";
-import { useDispatch, useSelector, } from 'react-redux';
-import { VisuallyImpaired } from '../../entities/VisuallyImpaired/VisuallyImpaired';
-import { activeMode, deactivateMode } from '../../app/store/reducers/visually';
-import HeaderNav from './headerNav/HeaderNav';
-import Lang from './lang/Lang';
-import { FaInstagram, FaFacebook } from "react-icons/fa";
-import { MdOutlineLocationOn, MdOutlinePhone } from "react-icons/md";
-import Burger from './burger/Burger';
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { IoSearch } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa6";
+import "./header.scss";
+import "./styles/burgerMenu.scss"
+import { TopHeader } from "./components/TopHeader";
+import { Navigation } from "./components/Navigation";
+import { activeMode, deactivateMode, useVisually } from "../../app/redux/slices/visually";
+import { useDispatch, useSelector } from "react-redux";
+import { Search } from "../../features";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { fetchBannerData } from "../../app/redux/slices/homeSlice";
+import { setLanguage } from "../../app/redux/store"; 
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const dispatch = useDispatch();
-  const { active } = useSelector((state) => state.visually);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const { active } = useVisually();
+  const { banner } = useSelector((state) => state.home);
+
+  const { t, i18n } = useTranslation();
+
+  const handleChangeLang = ({ target: { value } }) => {
+    i18n.changeLanguage(value); 
+    dispatch(setLanguage(value));   };
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1024);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    dispatch(fetchBannerData());
+  }, [dispatch]);
 
-  const mainTextSpeech = (text) => {
-    window.speechSynthesis.cancel();
-    const talk = new SpeechSynthesisUtterance(text);
-    talk.lang = 'ru-RU';
-    window.speechSynthesis.speak(talk);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && !event.target.closest('.burger-menu')) {
+        setIsOpen(false);
+      }
+      if (isSearchVisible && !event.target.closest('.search-component') && !event.target.closest('.header_bottom_group_icon')) {
+        setIsSearchVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, isSearchVisible]);
+
+  useEffect(() => {
+    if (isOpen || isSearchVisible) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, isSearchVisible]);
+
+  const handleMenuItemClick = () => {
+    setIsOpen(false);
+    setIsSearchVisible(false)
   };
 
-  const handleVisuallyImpairedToggle = () => {
-    if (active) {
-      dispatch(deactivateMode());
-      setTimeout(() => mainTextSpeech('Режим для слабовидящих выключен'), 100);
-    } else {
-      dispatch(activeMode());
-      setTimeout(() => mainTextSpeech('Режим для слабовидящих включен'), 100);
-    }
+  const handleSearchOpen = () => {
+    setIsSearchVisible(true);
+    setIsOpen(false);
   };
 
   return (
-    <div className="">
-      {active && <VisuallyImpaired mainTextSpeech={mainTextSpeech} />}
-      <div className='header'>
-        <div className="header container">
-          <div className="header_row">
-            <div className="logo">
-              <img src={logo} alt="logo" />
-            </div>
-            {!isMobile ? (
-              <>
-                <div className="tools">
-                  <Search />
-                  <button className='header_eye' onClick={handleVisuallyImpairedToggle}>
-                    <FaEyeSlash color='#105B60' className='eye' />
-                  </button>
-                </div>
-                <HeaderNav className="header_nav-top" start={0} end={5} />
-              </>
-            ) : (
-              <div className="mobile-tools">
-                <div className='lang'>
+    <div className="header">
+      {isSearchVisible && (
+        <div className="search-component">
+          <Search onClose={() => setIsSearchVisible(false)} />
+        </div>
+      )}
 
-                <Lang  />
-                </div>
-                <button className='header_eye' onClick={handleVisuallyImpairedToggle}>
-                  <FaEyeSlash color='#105B60' className='eye' />
-                </button>
-                <Search />
-                <Burger />
-              </div>
-            )}
+      <TopHeader />
+
+      <div className="header_bottom">
+        <div className="container header_bottom_group">
+          <div className="header_bottom_group_logo">
+            <Link to="/">
+              {banner.length > 0 && (
+                <img
+                  src={banner[0].image_above}
+                  className="logo"
+                  alt="logo"
+                />
+              )}
+            </Link>
           </div>
-          {!isMobile && (
-            <div className="header_nav-bottom">
-              <HeaderNav className="header_nav-bottom-links" start={5} end={10} />
-              <div className="header_right">
-                <Lang />
-                <div className='header_icon'>
-                  <div className='locate'><MdOutlineLocationOn /></div>
-                  <div className='locate'><MdOutlinePhone /></div>
-                  <div className='locate'><FaInstagram /></div>
-                  <div className='locate'><FaFacebook /></div>
-                </div>
+          <Navigation
+            className="desktop-menu"
+            onMenuItemClick={handleMenuItemClick}
+          />
+
+          <div className="header-desktop-controls">
+            <select className="desktop_select"
+              onChange={handleChangeLang}
+              value={i18n.language}
+            // defaultValue={i18n.language}
+            >
+              <option value="en">{t("En")}</option>
+              <option value="ky">{t("Ky")}</option>
+              <option value="ru">{t("Ru")}</option>
+            </select>
+            <div className="header-desktop-controls-icon">
+              <IoSearch
+                className="header_bottom_group_icon"
+                onClick={handleSearchOpen}
+              />
+              <div>
+                {!active ? (
+                  <FaEyeSlash onClick={() => {
+                    dispatch(activeMode())
+                    // mainTextSpeech('Режим для слабозрячих включен');
+                  }} className="header_bottom_group_icon" />
+
+                ) : (
+                  <button className="activeBtn" onClick={() => {
+                    dispatch(deactivateMode());
+                    // mainTextSpeech('Режим для слабозрячих выключен');
+                  }}>
+                    <FaEyeSlash className="header_bottom_group_icon" />
+                  </button>
+                )}
               </div>
             </div>
-          )}
+
+            <div className="burger-menu">
+              <input
+                id="menu__toggle"
+                type="checkbox"
+                checked={isOpen}
+                onChange={() => setIsOpen(!isOpen)}
+              />
+
+              <label className="menu__btn" htmlFor="menu__toggle">
+                <span></span>
+              </label>
+
+              <div className={`menu__box ${isOpen ? 'open' : ''}`}>
+                <div className="mobile-header">
+                  <Link onClick={handleMenuItemClick} to="/">
+                    {banner.length > 0 && (
+                      <img
+                        src={banner[0].image_above}
+                        className="logo"
+                        alt="logo"
+                      />
+                    )}
+                  </Link>
+
+                  <div className="header-controls">
+                    <select onChange={handleChangeLang} value={i18n.language}
+                    //  defaultValue={i18n.language}
+                    >
+                      <option value="ky">{t("Ky")}</option>
+                      <option value="en">{t("En")}</option>
+                      <option value="ru">{t("Ru")}</option>
+                    </select>
+                    <IoSearch
+                      className="header_bottom_group_icon"
+                      onClick={handleSearchOpen}
+                    />
+                    <div>
+                      {!active ? (
+                        <FaEyeSlash onClick={() => {
+                          dispatch(activeMode())
+                          // mainTextSpeech('Режим для слабозрячих включен');
+                        }} className="header_bottom_group_icon" />
+
+                      ) : (
+                        <button className="activeBtn" onClick={() => {
+                          dispatch(deactivateMode());
+                          // mainTextSpeech('Режим для слабозрячих выключен');
+                        }}>
+                          <FaEyeSlash className="header_bottom_group_icon" />
+                        </button>
+                      )}
+                      <input
+                        id="menu__toggle"
+                        type="checkbox"
+                        checked={isOpen}
+                        onChange={() => setIsOpen(!isOpen)}
+                      />
+                      <label className="menu__btn" htmlFor="menu__toggle">
+                        <span></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <Navigation
+                  className="mobile-menu"
+                  onMenuItemClick={handleMenuItemClick}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

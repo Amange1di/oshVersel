@@ -1,13 +1,10 @@
-import { NewsBanner, NewsBooksUpdate ,NewsAdvertisment  } from "../../widgets";
 
+import NewsSection from '../../widgets/newsSection/NewsSection'
 
-export const NewsPage = () => {
+export const NewsPage=()=> {
   return (
     <div>
-      <NewsBanner />    {/*адаптив готов */}
-      <NewsAdvertisment title="Обьявление о мероприятиях"/>
-      <NewsBooksUpdate />
-      <NewsAdvertisment title="Сми о нас"/>
+            <NewsSection />
     </div>
-  );
+  )
 }

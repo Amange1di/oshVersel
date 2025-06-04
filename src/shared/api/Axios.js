@@ -1,9 +1,17 @@
 import axios from "axios"
-
+import i18n from "../../i18n/i18n"
 
 const instance = axios.create({
-     baseURL: "https://api/api/v1"
-    })
+    baseURL: `https://www.islamacademy.webtm.ru/${i18n.language}/api/v1/`
+})
+instance.interceptors.request.use((config) => {
+    const lang = i18n.language;
+    config.baseURL = `https://www.islamacademy.webtm.ru/${lang}/api/v1/`;
+    return config;
+});
 
+i18n.on('languageChanged', (lang) => {
+    instance.defaults.baseURL = `https://www.islamacademy.webtm.ru/${lang}/api/v1/`;
+});
 
-export default instance
+export default instance;
