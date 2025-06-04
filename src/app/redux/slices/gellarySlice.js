@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import instance from '../../../shared/api/axios';
+import instance from '../../../shared/api/axios.js';
 
 export const fetchGalleryPhotos = createAsyncThunk(
     'gallery/fetchGalleryPhotos',
