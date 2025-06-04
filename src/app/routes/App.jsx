@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import '../styles/App.scss';
+import '../styles/app.scss';
 import '../styles/visualy.scss';
 
 import {
@@ -42,7 +42,7 @@ const routesArr = [
   { path: '/JurnalSection', element: <JurnalSection /> },
   { path: '/JurnalDetail/:id', element: <JurnalDetail /> },
   { path: "/JurnalCovponent", element: <JurnalCovponent /> },
- 
+
 ];
 
 
