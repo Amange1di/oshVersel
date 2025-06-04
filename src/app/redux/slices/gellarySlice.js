@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../../../shared/api/axios';
+import instance from '../../../shared/api/axios';
 
 export const fetchGalleryPhotos = createAsyncThunk(
     'gallery/fetchGalleryPhotos',
     async () => {
-        const response = await axios.get('/gellaryphotos/');
+        const response = await instance.get('/gellaryphotos/');
         return response.data;
     }
 );
